@@ -1,0 +1,3 @@
+daily Enter time into CP
+weekly 2 days before saturday Mow lawn
+monthly last saturday Balance checkbook
