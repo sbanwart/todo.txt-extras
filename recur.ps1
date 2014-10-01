@@ -10,11 +10,51 @@ function Parse-Recur($fileName)
 
 function Parse-Line($line)
 {
-    #$line.split() | ForEach-Object { Write-Host $_ }
-    $t = Get-Token($line)
-    $r = Get-Remainder($line)
-    Write-Host "|$t|"
-    Write-Host "|$r|"
+    $frequency = Get-Token($line)
+    $remainder = Get-Remainder($line)
+
+    switch ($frequency)
+    {
+        "daily" { $task = Process-Daily($remainder) }
+        "weekly" { $task = Process-Weekly($remainder) }
+        default { throw "Invalid frequency." }
+    }
+
+    $task
+}
+
+function Process-Daily($task)
+{
+    # For a daily task the remainder is the task itself
+    Process-Task($task)
+}
+
+function Process-Weekly($line)
+{
+    $remainder = $line
+
+    $t = (Get-Token($line) -as [int])
+    $v = $t -is [int]
+    Write-Host "t: $t"
+    Write-Host "v: $v"
+    # Determine if there is a lead time
+    if ($t -is [int])
+    #if (Get-Token($line) -is [int])
+    {
+        $leadTime = Get-Token($line)
+        $leadPeriod = Get-Token(Get-Remainder($line))
+        $remainder = Get-Remainder(Get-Remainder(Get-Remainder($line)))
+        Write-Host "Lead Time: $leadTime $leadPeriod"
+    }
+
+    $targetDay = Get-Token($remainder)
+    Write-Host "Target Day: $targetDay"
+    $task = Get-Remainder($remainder)
+}
+
+function Process-Task($task)
+{
+    $task
 }
 
 function Get-Token($line)

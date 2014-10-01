@@ -1,3 +1,4 @@
 daily Enter time into CP
 weekly 2 days before saturday Mow lawn
+weekly monday Hit the gym
 monthly last saturday Balance checkbook
