@@ -1,4 +1,4 @@
 daily Enter time into CP
-weekly 2 days before saturday Mow lawn
+weekly saturday Mow lawn due:2014-10-04
 weekly monday Hit the gym
 monthly last saturday Balance checkbook

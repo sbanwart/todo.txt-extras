@@ -4,7 +4,18 @@
 //        printfn "messages: %s" msg
 //    | _ ->
 //        printfn "USAGE: [message]"
+open System
 open System.IO
+
+// tests for calculating target date
+//let z = "tHURSDAY"
+//let d = z.Substring(0, 1).ToUpper() + z.Substring(1).ToLower()
+//
+//let y = Enum.Parse(typeof<DayOfWeek>, d) :?> DayOfWeek
+//match y = DateTime.Now.DayOfWeek with
+//    | true -> printfn "True"
+//    | false -> printfn "False"
+// end tests
 
 let inputFile = @"C:\Work\todo.txt-extras\recur.txt"
 let delimiter = " "
@@ -17,18 +28,18 @@ match fsi.CommandLineArgs with
             while not fileReader.EndOfStream do
                 yield fileReader.ReadLine()
         }
-    
-    let getLine = 
+        
+    let getLine =
         let line = fileReader inputFile
         line
         |> Seq.map (fun line -> line.Substring(0, line.IndexOf(delimiter)), line.Substring(line.IndexOf(delimiter) + 1))
-        |> Seq.iter (fun t -> 
-               match t with
-               | (f, r) when f = "daily" -> printfn "Frequency: %s, Remainder: %s" f r
-               | (f, r) when f = "weekly" -> printfn "Frequency: %s, Remainder: %s" f r
-               | (f, r) -> printfn "Invalid frequency")
+        |> Seq.choose (fun t ->
+            match t with
+            | (f, r) when f = "daily" -> Some(r)
+            | (f, r) when f = "weekly" -> Some(r.Substring(r.IndexOf(delimiter) + 1))
+            | _ -> None )
     
-    getLine
-//let entries = "daily Enter time into CP"
-//let t = entries.Substring(0, entries.IndexOf(delimiter))
-//printfn "token: %s" t
+    let tasks = getLine
+
+    tasks
+    |> Seq.iter (fun t -> printfn "Description: %s" t)
