@@ -30,13 +30,16 @@ match fsi.CommandLineArgs with
         }
         
     let getLine =
-        let line = fileReader inputFile
-        line
+        let lines = fileReader inputFile
+        lines
         |> Seq.map (fun line -> line.Substring(0, line.IndexOf(delimiter)), line.Substring(line.IndexOf(delimiter) + 1))
         |> Seq.choose (fun t ->
             match t with
             | (f, r) when f = "daily" -> Some(r)
-            | (f, r) when f = "weekly" -> Some(r.Substring(r.IndexOf(delimiter) + 1))
+            | (f, r : string) when f = "weekly" ->
+                let day = r.Substring(0, r.IndexOf(delimiter))
+                let task = r.Substring(r.IndexOf(delimiter) + 1)
+                if day = "saturday" then Some(task) else None
             | _ -> None )
     
     let tasks = getLine
