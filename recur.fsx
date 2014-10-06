@@ -7,16 +7,6 @@
 open System
 open System.IO
 
-// tests for calculating target date
-//let z = "tHURSDAY"
-//let d = z.Substring(0, 1).ToUpper() + z.Substring(1).ToLower()
-//
-//let y = Enum.Parse(typeof<DayOfWeek>, d) :?> DayOfWeek
-//match y = DateTime.Now.DayOfWeek with
-//    | true -> printfn "True"
-//    | false -> printfn "False"
-// end tests
-
 let inputFile = @"C:\Work\todo.txt-extras\recur.txt"
 let delimiter = " "
 
@@ -28,6 +18,10 @@ match fsi.CommandLineArgs with
             while not fileReader.EndOfStream do
                 yield fileReader.ReadLine()
         }
+
+    let dayOfWeek (input : string) =
+        let day = input.Substring(0, 1).ToUpper() + input.Substring(1).ToLower()
+        Enum.Parse(typeof<DayOfWeek>, day) :?> DayOfWeek
         
     let getLine =
         let lines = fileReader inputFile
@@ -39,7 +33,7 @@ match fsi.CommandLineArgs with
             | (f, r : string) when f = "weekly" ->
                 let day = r.Substring(0, r.IndexOf(delimiter))
                 let task = r.Substring(r.IndexOf(delimiter) + 1)
-                if day = "saturday" then Some(task) else None
+                if dayOfWeek(day) = DateTime.Now.DayOfWeek then Some(task) else None
             | _ -> None )
     
     let tasks = getLine
