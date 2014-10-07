@@ -1,4 +1,7 @@
 daily Enter time into CP
+daily @Computer +SomeProject due:%date+1% Get some work done
+daily @Computer +SomeProject due:%date+10% Get some more work done
 weekly saturday Mow lawn due:2014-10-04
 weekly monday Hit the gym
+weekly tuesday due:%date% Pay bills
 monthly last saturday Balance checkbook
