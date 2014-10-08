@@ -1,4 +1,1 @@
 (A) 2014-10-08 @Computer +MyProject Do this work
-Enter time into CP
-(A) 2014-10-08 @Computer +SomeProject due:2014-10-09 Get some work done
-@Computer +SomeProject due:2014-10-18 Get some more work done
