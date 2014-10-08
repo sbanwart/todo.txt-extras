@@ -61,7 +61,16 @@ match fsi.CommandLineArgs with
     let tasks = getLine
 
     tasks
+    |> Seq.choose(fun t ->
+        let mutable keep = true
+        use fileReader = new StreamReader(File.OpenRead(todoFile))
+        while not fileReader.EndOfStream do
+            let line = fileReader.ReadLine()
+            if t = line then 
+                keep <- false
+        match keep with
+        | true -> Some(t)
+        | false -> None)
     |> Seq.iter (fun t -> 
         use fileWriter = new StreamWriter(File.Open(todoFile, FileMode.Append))
         fileWriter.WriteLine(t))
-                 
