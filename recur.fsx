@@ -12,21 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//match fsi.CommandLineArgs with
-//    | [| scriptname; msg; |] ->
-//        printfn "running script: %s" scriptname
-//        printfn "messages: %s" msg
-//    | _ ->
-//        printfn "USAGE: [message]"
 open System
 open System.IO
 
-let recurFile = @"C:\Work\todo.txt-extras\recur.txt"
-let todoFile = @"C:\Work\todo.txt-extras\todo.txt"
 let delimiter = " "
 
 match fsi.CommandLineArgs with
-| _ -> 
+| [| scriptname; todoFile; recurFile |] ->
     let fileReader fileName = 
         seq { 
             use fileReader = new StreamReader(File.OpenRead(fileName))
@@ -88,3 +80,7 @@ match fsi.CommandLineArgs with
     |> Seq.iter (fun t -> 
         use fileWriter = new StreamWriter(File.Open(todoFile, FileMode.Append))
         fileWriter.WriteLine(t))
+
+| _ ->
+    printfn "recur.fsx 1.0.0"
+    printfn "usage: recur.fsx <path to todo.txt> <path to recur.txt>"
