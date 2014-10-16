@@ -58,6 +58,12 @@ match fsi.CommandLineArgs with
         |> Seq.choose (fun t ->
             match t with
             | (f, r) when f = "daily" -> Some(r)
+            | (f, r) when f = "weekdays" ->
+                let today = DateTime.Now
+                if today.DayOfWeek <> DayOfWeek.Saturday && today.DayOfWeek <> DayOfWeek.Sunday then Some(r) else None
+            | (f, r) when f = "weekends" ->
+                let today = DateTime.Now
+                if today.DayOfWeek = DayOfWeek.Saturday || today.DayOfWeek = DayOfWeek.Sunday then Some(r) else None
             | (f, r : string) when f = "weekly" ->
                 let day = r.Substring(0, r.IndexOf(delimiter))
                 let task = r.Substring(r.IndexOf(delimiter) + 1)
