@@ -68,6 +68,11 @@ match fsi.CommandLineArgs with
                 let day = r.Substring(0, r.IndexOf(delimiter))
                 let task = r.Substring(r.IndexOf(delimiter) + 1)
                 if dayOfWeek(day) = DateTime.Now.DayOfWeek then Some(task) else None
+            | (f, r) when f = "monthly" -> 
+                Seq.singleton (r.Substring(0, r.IndexOf(delimiter)), r.Substring(r.IndexOf(delimiter) + 1))
+                |> Seq.iter(fun (y, z) ->
+                    printfn "stuff: %s, %s" y z)
+                None
             | _ -> None )
     
     let tasks = getLine

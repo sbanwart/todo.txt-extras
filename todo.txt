@@ -2,3 +2,6 @@
 (A) 2014-10-15 @Computer +SomeProject due:2014-10-16 Get some work done
 @Computer +SomeProject due:2014-10-25 Get some more work done
 Enter time into CP
+(A) 2014-10-21 @Computer +SomeProject due:2014-10-22 Get some work done
+@Computer +SomeProject due:2014-10-31 Get some more work done
+due:2014-10-21 Pay bills
