@@ -47,6 +47,37 @@ match fsi.CommandLineArgs with
                 processDateMacro(newTask, nextMacro)
         else
             input
+
+    let rec findFirstDay (workingDate : DateTime, day : string) : int =
+        if workingDate.DayOfWeek = dayOfWeek(day) then workingDate.Day else findFirstDay(workingDate.AddDays(1.0), day)
+
+    let rec findLastDay (workingDate : DateTime, day : string) : int =
+        if workingDate.DayOfWeek = dayOfWeek(day) then workingDate.Day else findFirstDay(workingDate.AddDays(-1.0), day)
+
+    let dayMatches occurrence day =
+        let currentDate = System.DateTime.Now
+        match occurrence with
+        | "first" ->
+            let workingDate = new System.DateTime(currentDate.Year, currentDate.Month, 1)
+            let dayOfMonth = findFirstDay(workingDate, day)
+            if currentDate.Day = dayOfMonth then true else false
+        | "second" ->
+            let workingDate = new System.DateTime(currentDate.Year, currentDate.Month, 1)
+            let dayOfMonth = findFirstDay(workingDate, day)
+            if currentDate.Day = dayOfMonth + 7 then true else false
+        | "third" ->
+            let workingDate = new System.DateTime(currentDate.Year, currentDate.Month, 1)
+            let dayOfMonth = findFirstDay(workingDate, day)
+            if currentDate.Day = dayOfMonth + 14 then true else false
+        | "fourth" ->
+            let workingDate = new System.DateTime(currentDate.Year, currentDate.Month, 1)
+            let dayOfMonth = findFirstDay(workingDate, day)
+            if currentDate.Day = dayOfMonth + 21 then true else false
+        | "last" ->
+            let workingDate = new System.DateTime(currentDate.Year, currentDate.Month, DateTime.DaysInMonth(currentDate.Year, currentDate.Month))
+            let dayOfMonth = findFirstDay(workingDate, day)
+            if currentDate.Day = dayOfMonth then true else false 
+        | _ -> false 
         
     let getLine =
         let lines = fileReader recurFile
@@ -69,10 +100,12 @@ match fsi.CommandLineArgs with
                 let task = r.Substring(r.IndexOf(delimiter) + 1)
                 if dayOfWeek(day) = DateTime.Now.DayOfWeek then Some(task) else None
             | (f, r) when f = "monthly" -> 
-                Seq.singleton (r.Substring(0, r.IndexOf(delimiter)), r.Substring(r.IndexOf(delimiter) + 1))
-                |> Seq.iter(fun (y, z) ->
-                    printfn "stuff: %s, %s" y z)
-                None
+                let occurrence = r.Substring(0, r.IndexOf(delimiter))
+                let temp = r.Substring(r.IndexOf(delimiter) + 1)
+                let day = temp.Substring(0, temp.IndexOf(delimiter))
+                let task = temp.Substring(temp.IndexOf(delimiter) + 1)
+                printfn "occurrence: %s, day: %s, task: %s" occurrence day task
+                if dayMatches occurrence day then Some(task) else None
             | _ -> None )
     
     let tasks = getLine

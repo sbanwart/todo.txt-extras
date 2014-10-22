@@ -6,3 +6,5 @@ weekly saturday Mow lawn due:2014-10-04
 weekly monday Hit the gym
 weekly tuesday due:%date% Pay bills
 monthly last saturday Balance checkbook
+monthly fourth wednesday Enter expenses
+monthly fourth wednesday (B) %date% @Computer +SomeProject Hassle Jason on IM
