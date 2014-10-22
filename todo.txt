@@ -1,4 +1,6 @@
 (A) 2014-10-08 @Computer +MyProject Do this work
-(A) 2014-10-15 @Computer +SomeProject due:2014-10-16 Get some work done
-@Computer +SomeProject due:2014-10-25 Get some more work done
 Enter time into CP
+(A) 2014-10-22 @Computer +SomeProject due:2014-10-23 Get some work done
+@Computer +SomeProject due:2014-11-01 Get some more work done
+Enter expenses
+(B) 2014-10-22 @Computer +SomeProject Hassle Jason on IM
