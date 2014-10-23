@@ -8,3 +8,5 @@ weekly tuesday due:%date% Pay bills
 monthly last saturday Balance checkbook
 monthly fourth wednesday Enter expenses
 monthly fourth wednesday (B) %date% @Computer +SomeProject Hassle Jason on IM
+yearly october 23 (A) %date% @Computer +SomeProject due:%date+2% Finish this project
+yearly may 29 Grow older
