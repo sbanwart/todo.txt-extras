@@ -30,6 +30,22 @@ match fsi.CommandLineArgs with
         let day = input.Substring(0, 1).ToUpper() + input.Substring(1).ToLower()
         Enum.Parse(typeof<DayOfWeek>, day) :?> DayOfWeek
 
+    let getMonthAsNumber (input : string) =
+        match input.ToLower() with
+        | "january" -> 1
+        | "february" -> 2
+        | "march" -> 3
+        | "april" -> 4
+        | "may" -> 5
+        | "june" -> 6
+        | "july" -> 7
+        | "august" -> 8
+        | "september" -> 9
+        | "october" -> 10
+        | "november" -> 11
+        | "december" -> 12
+        | _ -> 0
+
     let rec processDateMacro (input : string, macrostart : int) = 
         if macrostart > 0 then
             let macroend = input.IndexOf("%", macrostart + 1)
@@ -104,8 +120,14 @@ match fsi.CommandLineArgs with
                 let temp = r.Substring(r.IndexOf(delimiter) + 1)
                 let day = temp.Substring(0, temp.IndexOf(delimiter))
                 let task = temp.Substring(temp.IndexOf(delimiter) + 1)
-                printfn "occurrence: %s, day: %s, task: %s" occurrence day task
                 if dayMatches occurrence day then Some(task) else None
+            | (f, r) when f = "yearly" ->
+                let currentDate = System.DateTime.Now
+                let month = getMonthAsNumber(r.Substring(0, r.IndexOf(delimiter)))
+                let temp = r.Substring(r.IndexOf(delimiter) + 1)
+                let day = Int32.Parse(temp.Substring(0, temp.IndexOf(delimiter)))
+                let task = temp.Substring(temp.IndexOf(delimiter) + 1)
+                if month = currentDate.Month && day = currentDate.Day then Some(task) else None
             | _ -> None )
     
     let tasks = getLine
