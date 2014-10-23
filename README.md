@@ -29,11 +29,27 @@ Example:
 
 ## Frequency
 
-Currently the script supports two frequency types, *daily* and *weekly*
+Currently the script supports six frequency types, *daily*, *weekly*, *weekdays*, *weekends*, *monthly* and *yearly*.
 
 The *daily* frequency doesn't take any additional parameters and tasks marked with it will be added to todo.txt every day.
 
 The *weekly* frequency takes a day of the week (sunday, monday, tuesday, etc.) as a parameter. Tasks marked with this frequency will be added once a week on the designated day.
+
+The *weekdays* frequency doesn't take any additional parameters adn tasks marked with it will be added to todo.txt every weekday. (Monday-Friday)
+
+The *weekends* frequency is identical to *weekdays* except it adds tasks on the weekend. (Saturday and Sunday)
+
+The *monthly* frequency takes two parameters. The first is a modifier describing the week on the month. Valid values are *first*, *second*, *third*, *fourth* and *last*. The second parameter is a day of the week. (sunday, monday, tuesday, etc.)
+
+Example:
+
+`monthly first saturday (B) @home +finances Balance checkbook`
+
+The *yearly* frequency takes two parameters. The first is a month (january, february, march, etc.) and the second is the numeric day of the month.  (1, 2, 3, 28, 29, etc.)
+
+Example:
+
+`yearly september 15 (A) @home +finances Pay quarterly taxes`
 
 ## Dates
 
@@ -49,7 +65,11 @@ As used in a task:
 
 `weekly monday (A) %date% @home +chores due:%date+2% Place trash can on the curb`
 
+# Limitations
+
+This script has been put throught the rigorous testing process known as "Works on My Machine." Invalid recurring task definitions will either be silently ignored or cause the script to crash.
+
 # Next Steps
 
-* Add a monthly frequency with a fuzzy day parameter. ex: monthly last saturday, monthly second tuesday
-* Add the ability to specify an absolute date for infrequent tasks. This is intended for tasks that only occur quarterly or yearly.
+* Clean up the code and improve performance.
+* Improve error handling
