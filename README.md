@@ -3,6 +3,10 @@ todo.txt-extras
 
 An F# script for adding recurring tasks to a Todo.txt (http://todotxt.com/) file.
 
+# Important Note
+
+This project is no longer being actively maintained. Due to the dependency on Dropbox with no plans to support other methods of syncing tasks between devices I have stopped using Todo.txt. As a result, I no longer need or use this script.
+
 # Prerequisites
 
 The script was written using F# and .NET version 4.5. It may run on other versions but I haven't tested it on anything else.
